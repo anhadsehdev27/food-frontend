@@ -1,28 +1,25 @@
-import { Outlet } from "react-router";
+import { Outlet, useNavigate } from "react-router";
+import { useEffect } from "react";
 import Sidebar from "./Sidebar";
-import { ToastContainer } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
-
 
 export default function DashboardLayout() {
-    
+  const navigate = useNavigate();
 
-    
-    return (
-        <div>
-            {/* Persistent Navigation Sidebar */}
-            <div className="dashboard-container">
-                <Sidebar />
+ useEffect(() => {
+  const token = localStorage.getItem("token");
 
-                {/* Main Content Area */}
-                <main className="w-80 p-4">
-                    {/* Child components (Profile or Settings) will inject right here */}
-                    <Outlet />
-                </main>
+  if (!token) {
+    navigate("/");
+  }
+}, [navigate]);
 
-                 <ToastContainer />
+  return (
+    <div className="dashboard-container">
+      <Sidebar />
 
-            </div>
-        </div>
-    );
+      <main className="w-80 p-4">
+        <Outlet />
+      </main>
+    </div>
+  );
 }

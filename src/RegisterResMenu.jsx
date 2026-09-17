@@ -143,6 +143,30 @@ export default function RegisterResMenu() {
             </div>
 
             <div className="fs-field">
+                <label>Menu</label>
+
+                <select
+                    name="menu_id"
+                    value={formState.menu_id}
+                    onChange={handleChange}
+                    required
+                >
+                    <option value="">Select Menu</option>
+
+                    {menus.map((menu) => (
+                        <option
+                            key={menu.id}
+                            value={menu.id}
+                        >
+                            {menu.name}
+                        </option>
+                    ))}
+                </select>
+            </div>
+
+
+
+            <div className="fs-field">
                 <label>Item</label>
 
                 <select
@@ -164,28 +188,7 @@ export default function RegisterResMenu() {
                 </select>
             </div>
 
-            <div className="fs-field">
-                <label>Menu</label>
-
-                <select
-                    name="menu_id"
-                    value={formState.menu_id}
-                    onChange={handleChange}
-                    required
-                >
-                    <option value="">Select Menu</option>
-
-                    {menus.map((menu) => (
-                        <option
-                            key={menu.id}
-                            value={menu.id}
-                        >
-                            {menu.menu_name}
-                        </option>
-                    ))}
-                </select>
-            </div>
-
+           
             <div className="fs-field">
                 <label>Description</label>
 

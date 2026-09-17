@@ -2,7 +2,6 @@
 // For more help visit https://formspr.ee/react-help
 import React, { useEffect, useState } from "react";
 import { useForm, ValidationError } from "@formspree/react";
-import "./css/Menu.css";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { API_BASE_URL } from "./api/base";

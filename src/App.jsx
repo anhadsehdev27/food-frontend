@@ -1,122 +1,187 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './App.css'
+import "./App.css";
+import { useState } from "react";
+import { useNavigate } from "react-router";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const navigate = useNavigate();
+  const [search, setSearch] = useState("");
+
+  const handleSearch = () => {
+    if (search.trim()) {
+      navigate(`/Orders?search=${encodeURIComponent(search)}`);
+    } else {
+      navigate("/Orders");
+    }
+  };
 
   return (
     <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
+      <header className="navbar">
+        <div className="logo">
+          🍽️ <span>FoodExpress</span>
         </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
+
+        <nav>
+          <a
+            href="#"
+            onClick={(e) => {
+              e.preventDefault();
+              navigate("/home");
+            }}
+            style={{ cursor: "pointer" }}
+          >
+            Home
+          </a>
+
+          <a
+            href="#"
+            onClick={(e) => {
+              e.preventDefault();
+              navigate("/ListItem");
+            }}
+            style={{ cursor: "pointer" }}
+          >
+            Menu
+          </a>
+
+          <a
+            href="#"
+            onClick={(e) => {
+              e.preventDefault();
+              navigate("/ListRestaurant");
+            }}
+            style={{ cursor: "pointer" }}
+          >
+            Restaurants
+          </a>
+
+          <a
+            href="#"
+            onClick={(e) => {
+              e.preventDefault();
+              navigate("/Orders");
+            }}
+            style={{ cursor: "pointer" }}
+          >
+            Orders
+          </a>
+
+          <a href="#">Contact</a>
+        </nav>
+
+        {/* NEW: Navbar Search Bar (between Contact and Login) */}
+        <div className="nav-search-container">
+          <input
+            type="text"
+            className="nav-search-input"
+            placeholder="Search..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                handleSearch();
+              }
+            }}
+          />
+          <button className="nav-search-btn" onClick={handleSearch}>
+            🔍
+          </button>
         </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
+
+        <button className="login-btn" onClick={() => navigate("/login")}>
+          Login
         </button>
-      </section>
+      </header>
 
-      <div className="ticks"></div>
+      <section className="hero">
+        <div className="hero-left">
+          <h1>
+            Delicious Food <br />
+            Order <span>Now</span>
+          </h1>
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
+          <p>Order from your favorite restaurants.</p>
+
+          
+
+          <div className="hero-buttons">
+            <button className="order-btn" onClick={() => navigate("/Orders")}>
+              Order Now
+            </button>
+
+            <button className="menu-btn" onClick={() => navigate("/ListItem")}>
+              Browse Menu
+            </button>
+          </div>
         </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
+
+        <div className="hero-right">
+          <img
+            src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=700"
+            alt="Food"
+          />
         </div>
       </section>
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
+      <section className="features">
+        <div className="card" onClick={() => navigate("/Orders")} style={{ cursor: "pointer" }}>
+          <h3>🚀 Served Fresh</h3>
+          <p>Fresh meals delivered</p>
+        </div>
+
+        <div className="card" onClick={() => navigate("/ListRestaurant")} style={{ cursor: "pointer" }}>
+          <h3>🍔 100+ Restaurants</h3>
+          <p>Choose from hundreds of restaurants near you.</p>
+        </div>
+
+        <div className="card" onClick={() => navigate("/payment")} style={{ cursor: "pointer" }}>
+          <h3>💳 Secure Payment</h3>
+          <p>Multiple payment methods with secure checkout.</p>
+        </div>
+
+        <div className="card" onClick={() => navigate("/restaurant")} style={{ cursor: "pointer" }}>
+          <h3>⭐ Top Rated</h3>
+          <p>Only highly rated restaurants and delicious meals.</p>
+        </div>
+      </section>
+
+      <section className="popular">
+        <h2>Popular Categories</h2>
+
+        <div className="categories">
+          <div className="category" onClick={() => navigate("/ListItem")} style={{ cursor: "pointer" }}>
+            🍕 Pizza
+          </div>
+
+          <div className="category" onClick={() => navigate("/ListItem")} style={{ cursor: "pointer" }}>
+            🍔 Burgers
+          </div>
+
+          <div className="category" onClick={() => navigate("/ListItem")} style={{ cursor: "pointer" }}>
+            🍜 Noodles
+          </div>
+
+          <div className="category" onClick={() => navigate("/ListItem")} style={{ cursor: "pointer" }}>
+            🥗 Healthy
+          </div>
+
+          <div className="category" onClick={() => navigate("/ListItem")} style={{ cursor: "pointer" }}>
+            🍰 Desserts
+          </div>
+
+          <div className="category" onClick={() => navigate("/ListItem")} style={{ cursor: "pointer" }}>
+            🥤 Drinks
+          </div>
+        </div>
+      </section>
+
+      <footer>
+        <h3>FoodExpress</h3>
+        <p>Fresh Food • Happy Customers</p>
+        <p>© 2026 FoodExpress. All Rights Reserved.</p>
+      </footer>
     </>
-  )
+  );
 }
 
-export default App
+export default App;

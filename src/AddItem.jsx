@@ -48,13 +48,14 @@ export default function Item() {
 
                 if (result.status === 200) {
                     toast.success("Item updated successfully");
-                    navigate("/item");
+                    navigate("/ListItem");
                 }
             } else {
                 const result = await axios.post(
                     `${API_BASE_URL}/item`,
                     formState
                 );
+
 
                 if (result.status === 200 || result.status === 201) {
                     toast.success("Item added successfully");

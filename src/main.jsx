@@ -1,73 +1,192 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './index.css'
-import App from './App.jsx'
-import { createBrowserRouter, RouterProvider } from 'react-router';
-import RegistrationForm from './RegisterUser.jsx';
-import DashboardLayout from './Dashboard.jsx';
-import Menu from "./AddMenu.jsx"
-import ListRegisterUser from './ListRegisterUser.jsx';
-import ListMenu from './ListMenu.jsx';
-import Item from './AddItem.jsx';
-import ListItem from './ListItem.jsx';
-import RegisterRestaurant from './RegisterRestaurant.jsx';
-import ListRestaurant from './ListRegisterRestaurant.jsx';
-import RegisterResMenu from './RegisterResMenu.jsx';
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import "./index.css";
 
-// 1. Define your routes
+import { createBrowserRouter, RouterProvider } from "react-router";
+import { ToastContainer } from "react-toastify";
+
+import Auth from "./Auth";
+import DashboardLayout from "./Dashboard";
+import ProtectedRoute from "./ProtectedRoute";
+
+import App from "./App.jsx";
+import RegistrationForm from "./RegisterUser.jsx";
+import Menu from "./AddMenu.jsx";
+import ListRegisterUser from "./ListRegisterUser.jsx";
+import ListMenu from "./ListMenu.jsx";
+import Item from "./AddItem.jsx";
+import ListItem from "./ListItem.jsx";
+import RegisterRestaurant from "./RegisterRestaurant.jsx";
+import ListRestaurant from "./ListRegisterRestaurant.jsx";
+import RegisterResMenu from "./RegisterResMenu.jsx";
+import ListResMenu from "./ListResMenu.jsx";
+import Orders from "./Order.jsx";
+import OrderItem from "./OrderItem.jsx";
+import Payment from "./Payment.jsx";
+import ResOrderList from "./ResOrderList.jsx";
+import UserOrderList from "./UserOrderList.jsx";
+
 const router = createBrowserRouter([
+  // Authentication Page
   {
-  path: "/",
-  element: <DashboardLayout />,
-  children: [
-    {
-      path: "/home",
-      element: <App />, // Your root or home component
-    },
-     {
-      path: "/menu/:id?",
-      element: <Menu />, // Your root or home component
-    },
-    
-     {
-      path: "/ListMenu",
-      element: <ListMenu />, // Your root or home component
-    },
-    {
-      path: "/user",
-      element: <RegistrationForm />, // Your registration form component
-    },
-    {
-      path: "/list/users",
-      element: <ListRegisterUser />, // Your list registered users component
-    },
-    {
-    path: "/item/:id?",
-    element: <Item />
-    },
-    {
-      path: "/ListItem",
-      element: <ListItem />, // Your root or home component
-    },
-     {
-      path: "/Restaurant",
-      element: <RegisterRestaurant />, // Your registration form component
-    },
-    {
-      path: "/ListRestaurant",
-      element: <ListRestaurant />, // Your list registered restaurants component
-    },
-    {
-      path: "/RegisterResMenu",
-      element: <RegisterResMenu />, // Your registration form component
-    },
+    path: "/",
+    element: <Auth />,
+  },
 
-  ]
+  // Protected Pages
+  {
+    element: (
+      <ProtectedRoute>
+        <DashboardLayout />
+      </ProtectedRoute>
+    ),
+    children: [
+      {
+        path: "/home",
+        element: <App />,
+      },
 
-}]);
+      {
+        path: "/menu/:id?",
+        element: (
+          <ProtectedRoute allowedRoles={[1, 3]}>
+            <Menu />
+          </ProtectedRoute>
+        ),
+      },
 
-createRoot(document.getElementById('root')).render(
+      {
+        path: "/ListMenu",
+        element: (
+          <ProtectedRoute allowedRoles={[1, 3]}>
+            <ListMenu />
+          </ProtectedRoute>
+        ),
+      },
+
+      {
+        path: "/user",
+        element: (
+          <ProtectedRoute allowedRoles={[1]}>
+            <RegistrationForm />
+          </ProtectedRoute>
+        ),
+      },
+
+      {
+        path: "/list/users",
+        element: (
+          <ProtectedRoute allowedRoles={[1]}>
+            <ListRegisterUser />
+          </ProtectedRoute>
+        ),
+      },
+
+      {
+        path: "/item/:id?",
+        element: (
+          <ProtectedRoute allowedRoles={[1, 3]}>
+            <Item />
+          </ProtectedRoute>
+        ),
+      },
+
+      {
+        path: "/ListItem",
+        element: (
+          <ProtectedRoute allowedRoles={[1, 3]}>
+            <ListItem />
+          </ProtectedRoute>
+        ),
+      },
+
+      {
+        path: "/Restaurant",
+        element: (
+          <ProtectedRoute allowedRoles={[1]}>
+            <RegisterRestaurant />
+          </ProtectedRoute>
+        ),
+      },
+
+      {
+        path: "/ListRestaurant",
+        element: (
+          <ProtectedRoute allowedRoles={[1]}>
+            <ListRestaurant />
+          </ProtectedRoute>
+        ),
+      },
+
+      {
+        path: "/RegisterResMenu",
+        element: (
+          <ProtectedRoute allowedRoles={[1, 3]}>
+            <RegisterResMenu />
+          </ProtectedRoute>
+        ),
+      },
+
+      {
+        path: "/ListResMenu",
+        element: (
+          <ProtectedRoute allowedRoles={[1, 3]}>
+            <ListResMenu />
+          </ProtectedRoute>
+        ),
+      },
+
+      {
+        path: "/Orders",
+        element: (
+          <ProtectedRoute allowedRoles={[2]}>
+            <Orders />
+          </ProtectedRoute>
+        ),
+      },
+
+      {
+        path: "/OrderItem",
+        element: (
+          <ProtectedRoute allowedRoles={[2]}>
+            <OrderItem />
+          </ProtectedRoute>
+        ),
+      },
+
+      {
+        path: "/Payment",
+        element: (
+          <ProtectedRoute allowedRoles={[2]}>
+            <Payment />
+          </ProtectedRoute>
+        ),
+      },
+
+      {
+        path: "/ResOrderList",
+        element: (
+          <ProtectedRoute allowedRoles={[3]}>
+            <ResOrderList />
+          </ProtectedRoute>
+        ),
+      },
+
+      {
+        path: "/UserOrderList",
+        element: (
+          <ProtectedRoute allowedRoles={[2]}>
+            <UserOrderList />
+          </ProtectedRoute>
+        ),
+      },
+    ],
+  },
+]);
+
+createRoot(document.getElementById("root")).render(
   <StrictMode>
     <RouterProvider router={router} />
-  </StrictMode>,
-)
+    <ToastContainer />
+  </StrictMode>
+);
